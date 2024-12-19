@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Old Are You?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: white;
+            position: relative;
+        }
+        .top-bar, .bottom-bar {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            left: 0;
+        }
+        .top-bar {
+            top: 0;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+        .bottom-bar {
+            bottom: 0;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+        .container {
+            width: 100%;
+            max-width: 28rem;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 12px;
+            background: #ef4444;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            border-radius: 25px;
+        }
+        .slider:hover {
+            opacity: 1;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #ffffff;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s;
+        }
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #ffffff;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s;
+        }
+        .slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+        }
+        .back-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            color: black;
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .back-button:hover {
+            color: #555;
+        }
+        .age-display {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .description {
+            background-color: #fee2e2;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+        .continue-button {
+            background-color: #ef4444;
+            color: white;
+            font-size: 1.125rem;
+            font-weight: bold;
+            padding: 0.5rem 2rem;
+            border: none;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .continue-button:hover {
+            background-color: #dc2626;
+        }
+
+        /* Add spacing between slider and continue button */
+        .slider-container {
+            margin-bottom: 2rem; /* Adjust spacing as needed */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 767px) {
+            .container {
+                padding: 1rem;
+                width: 90%;
+            }
+            .age-display {
+                font-size: 2.5rem;
+            }
+            .description {
+                font-size: 0.75rem;
+                padding: 0.75rem;
+            }
+            .continue-button {
+                font-size: 1rem;
+                padding: 0.5rem 1.5rem;
+            }
+            .slider-container {
+                margin-bottom: 1.5rem; /* Adjust spacing for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar"></div>
+
+    <div class="container">
+        <div class="back-button" onclick="goBack()">
+            <i class="fas fa-arrow-left mr-2"></i>
+            <span class="text-lg">Back</span>
+        </div>
+        
+        <h1 class="text-2xl font-bold text-center mb-2">How Old Are You?</h1>
+        
+        <p class="description">
+            Please tell us your age to help us provide age-appropriate content and recommendations. 
+            This information ensures you get the most relevant features and experience on our platform. 
+            Don't worry, you can always update this information later in your profile settings.
+        </p>
+        
+        <div id="ageDisplay" class="age-display">28</div>
+        
+        <div class="flex justify-center mb-4">
+            <i class="fas fa-caret-up text-blue-500 text-2xl"></i>
+        </div>
+        
+        <div class="slider-container flex justify-center w-full">
+            <input 
+                type="range" 
+                min="1" 
+                max="89" 
+                value="28" 
+                class="slider" 
+                id="ageSlider"
+            >
+        </div>
+        
+        <div class="flex justify-center">
+            <button 
+                class="continue-button" 
+                onclick="continueToNextPage()"
+            >
+                Continue
+            </button>
+        </div>
+    </div>
+
+    <div class="bottom-bar"></div>
+
+    <script>
+        // Get DOM elements
+        const ageSlider = document.getElementById('ageSlider');
+        const ageDisplay = document.getElementById('ageDisplay');
+
+        // Update age display when slider changes
+        ageSlider.addEventListener('input', function() {
+            ageDisplay.textContent = this.value;
+        });
+
+        // Function to go to the previous page
+        function goBack() {
+            window.location.href = 'gender.html';
+        }
+
+        // Function to continue to the next page
+        function continueToNextPage() {
+            window.location.href = 'weight.html';
+        }
+    </script>
+</body>
+</html>

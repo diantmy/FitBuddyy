@@ -1,0 +1,362 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <style>
+      /* Header Styles */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.5);
+      }
+
+      .logo h1 {
+        font-size: 1.5em;
+        color: #ffffff;
+        margin: 0;
+      }
+
+      .nav {
+        display: flex;
+        gap: 50px;
+      }
+
+      .nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease-in-out;
+      }
+
+      .nav a:hover {
+        color: #e74c3c;
+      }
+
+      .profile-link {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .profile-link a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease-in-out;
+      }
+
+      .profile-link a:hover {
+        color: #e74c3c;
+      }
+
+      /* Bottom Navbar Styles */
+      .bottom-nav {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #1c1c1c;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+
+      .bottom-nav ul {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .bottom-nav li {
+        text-align: center;
+      }
+
+      .bottom-nav a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .bottom-nav a:hover {
+        color: #e74c3c;
+      }
+
+      .bottom-nav img {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 5px;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .nav {
+          display: none;
+        }
+
+        .bottom-nav {
+          display: block;
+        }
+
+        .button {
+          padding: 10px 20px;
+          font-size: 0.9em;
+        }
+
+        .profile-link {
+          position: absolute;
+          top: 15px;
+          right: 20px;
+        }
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-100 font-sans min-h-screen flex flex-col">
+    <div class="w-full bg-white shadow-md overflow-hidden flex-grow">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <h1>FitBuddy</h1>
+        </div>
+        <nav class="nav">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="activity.html">Activity</a>
+          <a href="community.html">Community</a>
+        </nav>
+        <div class="profile-link">
+          <a href="aboutus.html">About Us</a>
+          <a href="profile.html"><img src="img/poooto.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 30px" /></a>
+        </div>
+      </header>
+
+      <!-- Tabs -->
+      <div class="flex justify-around mt-4">
+        <button id="todayBtn" class="px-4 py-2 bg-gray-200 text-white rounded-md" onclick="updateData('today')">Today</button>
+        <button id="weekBtn" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-md" onclick="updateData('week')">Week</button>
+        <button id="monthBtn" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-md" onclick="updateData('month')">Month</button>
+      </div>
+      <!-- Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
+        <!-- Walk Card -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <div class="flex items-center justify-between">
+            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+              <i class="fas fa-shoe-prints"></i>
+            </div>
+            <span class="text-sm font-semibold">Walk</span>
+          </div>
+          <div class="flex flex-col items-center mt-4">
+            <div class="relative w-24 h-24">
+              <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 36 36">
+                <path
+                  class="text-gray-200"
+                  d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke-width="3"
+                ></path>
+                <path
+                  id="walkPath"
+                  class="text-red-500"
+                  d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831"
+                  fill="none"
+                  stroke-dasharray="60, 100"
+                  stroke-width="3"
+                ></path>
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span id="walkData" class="text-xl font-bold">2265</span>
+              </div>
+            </div>
+            <span class="text-sm text-gray-500">Steps</span>
+          </div>
+        </div>
+        <!-- Sleep Card -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <div class="flex items-center justify-between">
+            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+              <i class="fas fa-moon"></i>
+            </div>
+            <span class="text-sm font-semibold">Sleep</span>
+          </div>
+          <div class="flex flex-col items-center mt-4">
+            <div class="relative w-24 h-24">
+              <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 36 36">
+                <path
+                  class="text-gray-200"
+                  d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke-width="3"
+                ></path>
+                <path
+                  id="sleepPath"
+                  class="text-gray-300"
+                  d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831"
+                  fill="none"
+                  stroke-dasharray="80, 100"
+                  stroke-width="3"
+                ></path>
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span id="sleepData" class="text-xl font-bold">8:50</span>
+              </div>
+            </div>
+            <span class="text-sm text-gray-500">Hours</span>
+          </div>
+        </div>
+        <!-- Heart Card -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <div class="flex items-center justify-between">
+            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+              <i class="fas fa-heart"></i>
+            </div>
+            <span class="text-sm font-semibold">Heart</span>
+          </div>
+          <div class="flex flex-col items-center mt-4">
+            <div class="relative w-24 h-24">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span id="heartData" class="text-xl font-bold">115</span>
+              </div>
+            </div>
+            <span class="text-sm text-gray-500">bmp</span>
+          </div>
+        </div>
+        <!-- Calories Card -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <div class="flex items-center justify-between">
+            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+              <i class="fas fa-fire"></i>
+            </div>
+            <span class="text-sm font-semibold">Calories</span>
+          </div>
+          <div class="flex flex-col items-center mt-4">
+            <div class="relative w-24 h-24">
+              <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 36 36">
+                <path
+                  class="text-gray-200"
+                  d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke-width="3"
+                ></path>
+                <path
+                  id="caloriesPath"
+                  class="text-red-500"
+                  d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831"
+                  fill="none"
+                  stroke-dasharray="40, 100"
+                  stroke-width="3"
+                ></path>
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span id="caloriesData" class="text-xl font-bold">399</span>
+              </div>
+            </div>
+            <span class="text-sm text-gray-500">Kcal</span>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+    </div>
+
+    <!-- Bottom Navbar -->
+    <nav class="bottom-nav">
+      <ul>
+        <li>
+          <a href="dashboard.html">
+            <img src="img/dashboard.png" alt="Home" />
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="activity.html">
+            <img src="img/activ.png" alt="Activity" />
+            Activity
+          </a>
+        </li>
+        <li>
+          <a href="community.html">
+            <img src="img/community.png" alt="Community" />
+            Community
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <script>
+      function updateData(period) {
+        const todayData = {
+          walk: { value: 2265, dasharray: "60, 100" },
+          sleep: { value: "8:50", dasharray: "80, 100" },
+          heart: { value: 115 },
+          calories: { value: 399, dasharray: "40, 100" },
+        };
+
+        const weekData = {
+          walk: { value: 15800, dasharray: "80, 100" },
+          sleep: { value: "56:00", dasharray: "90, 100" },
+          heart: { value: 110 },
+          calories: { value: 2800, dasharray: "70, 100" },
+        };
+
+        const monthData = {
+          walk: { value: 60000, dasharray: "90, 100" },
+          sleep: { value: "240:00", dasharray: "95, 100" },
+          heart: { value: 105 },
+          calories: { value: 12000, dasharray: "85, 100" },
+        };
+
+        let data;
+        if (period === "today") {
+          data = todayData;
+          document.getElementById("todayBtn").classList.add("bg-black", "text-white");
+          document.getElementById("weekBtn").classList.remove("bg-black", "text-white");
+          document.getElementById("weekBtn").classList.add("bg-gray-200", "text-gray-600");
+          document.getElementById("monthBtn").classList.remove("bg-black", "text-white");
+          document.getElementById("monthBtn").classList.add("bg-gray-200", "text-gray-600");
+        } else if (period === "week") {
+          data = weekData;
+          document.getElementById("todayBtn").classList.remove("bg-black", "text-white");
+          document.getElementById("todayBtn").classList.add("bg-gray-200", "text-gray-600");
+          document.getElementById("weekBtn").classList.add("bg-black", "text-white");
+          document.getElementById("monthBtn").classList.remove("bg-black", "text-white");
+          document.getElementById("monthBtn").classList.add("bg-gray-200", "text-gray-600");
+        } else if (period === "month") {
+          data = monthData;
+          document.getElementById("todayBtn").classList.remove("bg-black", "text-white");
+          document.getElementById("todayBtn").classList.add("bg-gray-200", "text-gray-600");
+          document.getElementById("weekBtn").classList.remove("bg-black", "text-white");
+          document.getElementById("weekBtn").classList.add("bg-gray-200", "text-gray-600");
+          document.getElementById("monthBtn").classList.add("bg-black", "text-white");
+        }
+
+        document.getElementById("walkData").textContent = data.walk.value;
+        document.getElementById("walkPath").setAttribute("stroke-dasharray", data.walk.dasharray);
+        document.getElementById("sleepData").textContent = data.sleep.value;
+        document.getElementById("sleepPath").setAttribute("stroke-dasharray", data.sleep.dasharray);
+        document.getElementById("heartData").textContent = data.heart.value;
+        document.getElementById("caloriesData").textContent = data.calories.value;
+        document.getElementById("caloriesPath").setAttribute("stroke-dasharray", data.calories.dasharray);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aktivitas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      /* Custom CSS */
+      /* Header Styles */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.5);
+      }
+
+      .logo h1 {
+        font-size: 1.5em;
+        color: #ffffff;
+        margin: 0;
+      }
+
+      .nav {
+        display: flex;
+        gap: 50px;
+      }
+
+      .nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease-in-out;
+      }
+
+      .nav a:hover {
+        color: #e74c3c;
+      }
+
+      .profile-link {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .profile-link a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease-in-out;
+      }
+
+      .profile-link a:hover {
+        color: #e74c3c;
+      }
+      .navbar {
+        background-color: #f8f9fa;
+      }
+
+      .profile-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #ffd6e7;
+        overflow: hidden;
+      }
+
+      .profile-circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .workout-banner {
+        background: linear-gradient(to right, #303030, #e0e0e0);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .workout-banner img {
+        max-width: 80px;
+      }
+      .section-title {
+        margin: 20px 0;
+        font-weight: bold;
+      }
+      .card-custom {
+        border: none;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .carousel-item {
+        transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      }
+      .back-button {
+        margin-bottom: 20px;
+      }
+
+      /* Bottom Navbar Styles */
+      .bottom-nav {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #1c1c1c;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+
+      .bottom-nav ul {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .bottom-nav li {
+        text-align: center;
+      }
+
+      .bottom-nav a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .bottom-nav a:hover {
+        color: #e74c3c;
+      }
+
+      .bottom-nav img {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 5px;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .nav {
+          display: none;
+        }
+
+        .bottom-nav {
+          display: block;
+        }
+
+        .hero-text h1 {
+          font-size: 2em;
+        }
+
+        .hero-text p {
+          font-size: 1em;
+        }
+
+        .button {
+          padding: 10px 20px;
+          font-size: 0.9em;
+        }
+
+        .profile-link {
+          position: absolute;
+          top: 15px;
+          right: 20px;
+        }
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-100 font-sans min-h-screen flex flex-col">
+    <div class="w-full bg-white shadow-md overflow-hidden flex-grow">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <h1>FitBuddy</h1>
+        </div>
+        <nav class="nav">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="activity.html">Activity</a>
+          <a href="community.html">Community</a>
+        </nav>
+        <a href="aboutus.html">About Us</a>
+        <div class="profile-link">
+          <a href="profile.html"><img src="img/poooto.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 30px" /></a>
+        </div>
+      </header>
+      <div class="container py-4">
+        <!-- Banner -->
+        <div class="workout-banner d-flex align-items-center justify-content-between mb-4">
+          <div>
+            <br />
+            <h2>Best Quarantine Workout</h2>
+            <a href="#" class="text-danger fw-bold">See more →</a>
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
+          <img src="img/squat no bg.png" alt="Workout Icon" width="500px" />
+        </div>
+
+        <!-- Best for You Section with Animated Carousel -->
+        <h3 class="section-title">Best for you</h3>
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="card-custom bg-light">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <img src="img/Belly fat.png" alt="belly" width="50em" />
+                      </div>
+                      <div class="col-md-3">
+                        <h5>Belly fat burner</h5>
+                        <p class="text-muted">10 min</p>
+                        <span class="badge bg-secondary">Beginner</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card-custom bg-light">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <img src="img/running1.png" alt="belly" width="50em" />
+                      </div>
+                      <div class="col-md-3">
+                        <h5>Lose Fat</h5>
+                        <p class="text-muted">10 min</p>
+                        <span class="badge bg-secondary">Beginner</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="card-custom bg-light">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <img src="img/plank.png" alt="belly" width="50em" />
+                      </div>
+                      <div class="col-md-3">
+                        <h5>Plank</h5>
+                        <p class="text-muted">5 min</p>
+                        <span class="badge bg-success">Expert</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card-custom bg-light">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <img src="img/bicep.png" alt="belly" width="50em" />
+                      </div>
+                      <div class="col-md-3">
+                        <h5>Build Wh</h5>
+                        <p class="text-muted">30 min</p>
+                        <span class="badge bg-warning">Intermediate</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample " data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+        <!-- Challenge Section -->
+        <h3 class="section-title">Challenge</h3>
+        <div class="row g-3">
+          <div class="col-4">
+            <div class="card-custom plank challenge-card text-center">Plank Challenge</div>
+          </div>
+          <div class="col-4">
+            <div class="card-custom sprint challenge-card text-center">Sprint Challenge</div>
+          </div>
+          <div class="col-4">
+            <div class="card-custom squat challenge-card text-center">Squat Challenge</div>
+          </div>
+        </div>
+
+        <!-- Fast Warmup Section with Animated Carousel -->
+        <h3 class="section-title">Fast Warmup</h3>
+        <div id="carouselFastWarmup" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="card-custom bg-light d-flex align-items-center">
+                    <img src="img/legexer.png" alt="Exercise" class="me-3" style="width: 50px; height: 50px; object-fit: cover" />
+                    <div>
+                      <h6>Leg exercises</h6>
+                      <p class="text-muted mb-0">10 min</p>
+                      <span class="badge bg-secondary">Beginner</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="card-custom bg-light d-flex align-items-center">
+                    <img src="img/backwa.png" alt="Exercise" class="me-3" style="width: 50px; height: 50px; object-fit: cover" />
+                    <div>
+                      <h6>Backward I</h6>
+                      <p class="text-muted mb-0">5 min</p>
+                      <span class="badge bg-secondary">Beginner</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="card-custom bg-light d-flex align-items-center">
+                    <img src="img/armcirc.png" alt="Exercise" class="me-3" style="width: 50px; height: 50px; object-fit: cover" />
+                    <div>
+                      <h6>Arm Circles</h6>
+                      <p class="text-muted mb-0">5 min</p>
+                      <span class="badge bg-secondary">Beginner</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="card-custom bg-light d-flex align-items-center">
+                    <img src="img/highkne.png" alt="Exercise" class="me-3" style="width: 50px; height: 50px; object-fit: cover" />
+                    <div>
+                      <h6>High Knees</h6>
+                      <p class="text-muted mb-0">5 min</p>
+                      <span class="badge bg-secondary">Beginner</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselFastWarmup" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselFastWarmup" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <br />
+      <br />
+    </div>
+
+    <!-- Bottom Navbar -->
+    <nav class="bottom-nav">
+      <ul>
+        <li>
+          <a href="dashboard.html"> <img src="img/dashboard black.png" alt="Home" /> Home </a>
+        </li>
+        <li>
+          <a href="activity.html">
+            <img src="img/run white.png" alt="Activity" />
+            Activity
+          </a>
+        </li>
+        <li>
+          <a href="community.html">
+            <img src="img/community.png" alt="Community" />
+            Community
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

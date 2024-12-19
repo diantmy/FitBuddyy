@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gender Selection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        .top-bar, .bottom-bar {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            left: 0;
+        }
+        .top-bar {
+            top: 0;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+        .bottom-bar {
+            bottom: 0;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+        .container {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 42rem;
+            z-index: 1;
+        }
+        .title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .description {
+            text-align: center;
+            font-size: 0.875rem;
+            color: #4b5563;
+            background-color: #fee2e2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .gender-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .gender-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .gender-icon {  
+            border-radius: 9999px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgb(0, 0, 0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        .gender-icon-male {
+            background-color: #1d4ed8;
+        }
+        .gender-icon-male-selected {
+            background-color: #1e40af;
+            transform: scale(1.3);
+        }
+        .gender-icon-female {
+            background-color: #db2777;
+        }
+        .gender-icon-female-selected {
+            background-color: #be185d;
+            transform: scale(1.3);
+        }
+        .gender-label {
+            margin-top: 0.5rem;
+            color: #9ca3af;
+            transition: color 0.3s;
+        }
+        .gender-label-selected {
+            color: #374151;
+        }
+        .continue-button {
+            margin-top: 2rem;
+            width: 100%;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            border: none;
+            transition: all 0.3s;
+        }
+        .continue-button-disabled {
+            background-color: #d1d5db;
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+        .continue-button-enabled {
+            background-color: #ef4444;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 767px) {
+            .container {
+                padding: 1rem;
+                width: 90%;
+            }
+            .title {
+                font-size: 1.25rem;
+            }
+            .description {
+                font-size: 0.75rem;
+                padding: 0.75rem;
+            }
+            .gender-icon {
+                padding: 1rem;
+            }
+            .continue-button {
+                font-size: 0.875rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar"></div>
+    <div class="container">
+        <h1 class="title">What's Your Gender</h1>
+        
+        <p class="description">
+            Please select your gender to help us personalize your experience. Your choice will help us provide content and recommendations tailored just for you. You can always update this preference later in your profile settings.
+        </p>
+        
+        <div class="gender-selection">
+            <div id="maleOption" class="gender-option">
+                <div id="maleIcon" class="gender-icon gender-icon-male">
+                    <i class="fas fa-mars text-white text-4xl"></i>
+                </div>
+                <p id="maleLabel" class="gender-label">Male</p>
+            </div>
+            
+            <div id="femaleOption" class="gender-option">
+                <div id="femaleIcon" class="gender-icon gender-icon-female">
+                    <i class="fas fa-venus text-white text-4xl"></i>
+                </div>
+                <p id="femaleLabel" class="gender-label">Female</p>
+            </div>
+        </div>
+        
+        <button 
+            id="continueButton" 
+            class="continue-button continue-button-disabled" 
+            disabled
+        >
+            Continue
+        </button>
+    </div>
+    <div class="bottom-bar"></div>
+
+    <script>
+        // Get DOM elements
+        const maleOption = document.getElementById('maleOption');
+        const femaleOption = document.getElementById('femaleOption');
+        const maleIcon = document.getElementById('maleIcon');
+        const femaleIcon = document.getElementById('femaleIcon');
+        const maleLabel = document.getElementById('maleLabel');
+        const femaleLabel = document.getElementById('femaleLabel');
+        const continueButton = document.getElementById('continueButton');
+
+        let selectedGender = null;
+
+        // Event listeners for gender selection
+        maleOption.addEventListener('click', () => selectGender('Male'));
+        femaleOption.addEventListener('click', () => selectGender('Female'));
+
+        function selectGender(gender) {
+            // Reset previous selection
+            maleIcon.classList.remove('gender-icon-male-selected');
+            femaleIcon.classList.remove('gender-icon-female-selected');
+            maleLabel.classList.remove('gender-label-selected');
+            femaleLabel.classList.remove('gender-label-selected');
+
+            // Set new selection
+            if (gender === 'Male') {
+                maleIcon.classList.add('gender-icon-male-selected');
+                maleLabel.classList.add('gender-label-selected');
+                selectedGender = 'Male';
+            } else {
+                femaleIcon.classList.add('gender-icon-female-selected');
+                femaleLabel.classList.add('gender-label-selected');
+                selectedGender = 'Female';
+            }
+
+            // Enable continue button
+            continueButton.disabled = false;
+            continueButton.classList.remove('continue-button-disabled');
+            continueButton.classList.add('continue-button-enabled');
+        }
+
+        // Continue button event listener
+        continueButton.addEventListener('click', () => {
+            if (selectedGender) {
+                window.location.href = 'age.html';
+            }
+        });
+    </script>
+</body>
+</html>

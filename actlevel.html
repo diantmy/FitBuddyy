@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Activity Level</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        .top-bar, .bottom-bar {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            left: 0;
+            z-index: 10;
+        }
+        .top-bar {
+            top: 0;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+        .bottom-bar {
+            bottom: 0;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+        .back-button {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        color: black;
+        cursor: pointer;
+        transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: #555; /* Same hover effect from Code 1 */
+        }
+
+        .level-button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #6D28D9;
+            background-color: #F3F4F6;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .level-button:hover {
+            background-color: #E5E7EB;
+            transform: scale(1.02);
+        }
+        .level-button.selected {
+            outline: 2px solid #6D28D9;
+            outline-offset: 4px;
+        }
+        .continue-button {
+            background-color: #EF4444;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .continue-button:hover {
+            background-color: #DC2626;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 767px) {
+            .back-button {
+                top: 5px; /* Adjust back button for smaller screens */
+            }
+            .level-button {
+                font-size: 16px;
+                padding: 10px;
+            }
+            .continue-button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Top Bar -->
+    <div class="top-bar"></div>
+
+    <!-- Back Button -->
+    <div class="back-button" onclick="goBack()">
+        <i class="fas fa-arrow-left mr-2"></i>
+        <span class="text-lg">Back</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col items-center justify-center min-h-screen bg-white relative">
+        <div class="w-full max-w-md p-4">
+            <h1 class="text-2xl font-bold text-center mb-2">Physical Activity Level</h1>
+            <p class="text-center text-sm bg-red-100 p-2 rounded mb-4">
+                Help us understand your current lifestyle by selecting your typical activity level throughout the week.
+                This will help us calculate the right intensity level and create a program that matches your experience, from beginner to advanced fitness enthusiast.
+            </p>
+
+            <!-- Level Options -->
+            <div id="level-options" class="flex flex-col space-y-4 mb-6">
+                <button class="level-button" onclick="selectLevel('Beginner')">Beginner</button>
+                <button class="level-button" onclick="selectLevel('Intermediate')">Intermediate</button>
+                <button class="level-button" onclick="selectLevel('Advanced')">Advanced</button>
+            </div>
+
+            <!-- Continue Button -->
+            <div class="flex justify-center">
+                <button class="continue-button" onclick="continueToNext()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar"></div>
+
+    <script>
+        let selectedLevel = "";
+
+        // Go back to the previous page
+        function goBack() {
+            window.location.href = 'purpose.html';
+        }
+
+        // Handle level selection
+        function selectLevel(level) {
+            selectedLevel = level;
+
+            // Remove selected state from all buttons
+            const buttons = document.querySelectorAll(".level-button");
+            buttons.forEach(button => button.classList.remove("selected"));
+
+            // Add selected state to the clicked button
+            const selectedButton = Array.from(buttons).find(btn => btn.textContent === level);
+            if (selectedButton) {
+                selectedButton.classList.add("selected");
+            }
+        }
+
+        // Handle continue button click
+        function continueToNext() {
+            if (selectedLevel) {
+                // Proceed to the next page
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Please select a level to continue.");
+            }
+        }
+    </script>
+</body>
+</html>
